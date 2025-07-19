@@ -1,0 +1,39 @@
+#下面这些内容是为了让MyBatis映射
+#指定Mybatis的Mapper文件
+mybatis:
+  mapper-locations: classpath:mappers/**Mapper.xml
+  #指定Mybatis的实体目录
+  type-aliases-package: com.zmbdp.mybatisdemo.mybatis.entity
+  configuration: # 配置打印 MyBatis日志
+    map-underscore-to-camel-case: true #配置驼峰自动转换
+
+
+kaptcha:
+  # 设置字体大小
+  textproducer:
+    font:
+      size: 30
+    # 设置验证码长度
+    char:
+      length: 5
+  # 设置边框
+  border:
+    # 边框颜色
+    color: blue
+  image:
+    # 设置宽度
+    width: 120
+    height: 40
+  items:
+    # admin captcha
+    admin:
+      path: /admin/captcha
+      session:
+        key: ADMIN_KAPTCHA_SESSION_KEY
+        date: ADMIN_KAPTCHA_SESSION_DATE
+spring:
+  profiles:
+    active: prod
+
+
+

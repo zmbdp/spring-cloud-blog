@@ -1,0 +1,79 @@
+.container-login {
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-dialog {
+    width: 400px;
+    height: 370px; /* 调整高度以适应验证码 */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 20px;
+    border-radius: 10px;
+}
+
+.login-dialog h3 {
+    text-align: center;
+}
+
+.login-dialog .row {
+    width: 280px;
+    height: 40px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-dialog .row>input {
+    width: 220px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+}
+
+.login-dialog .verificationCodeImg {
+    display: block; /* 确保图片在新的行中显示 */
+    margin-top: 10px; /* 添加上边距以分隔输入框和图片 */
+    margin-left: auto; /* 自动左边距以居中图片（如果需要的话） */
+    margin-right: auto; /* 自动右边距以居中图片（如果需要的话） */
+    cursor: pointer;
+    border-radius: 5px;
+    max-width: 100%; /* 确保图片不会超出容器宽度 */
+}
+
+/* 确保登录按钮和注册按钮形状一致 */
+#submit, .btn-register {
+    width: 280px;        /* 设置相同的宽度 */
+    height: 40px;        /* 设置相同的高度 */
+    border-radius: 5px; /* 添加相同的圆角 */
+    border: none;        /* 确保没有边框 */
+    cursor: pointer;     /* 鼠标悬停时显示手型光标 */
+    font-size: 16px;     /* 设置相同的字体大小 */
+}
+
+/* 登录按钮的样式 */
+#submit {
+    background-color: green; /* 设置绿色 */
+    color: white;
+}
+
+/* 登录按钮的悬停样式 */
+#submit:hover {
+    background-color: darkgreen;
+}
+
+/* 注册按钮的样式 */
+.btn-register {
+    background-color: orange; /* 设置橙色 */
+    color: white;
+}
+
+/* 注册按钮的悬停样式 */
+.btn-register:hover {
+    background-color: darkorange; /* 添加悬停效果 */
+}

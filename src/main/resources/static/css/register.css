@@ -1,0 +1,95 @@
+/* 通用样式 */
+.container-register {
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-dialog {
+    width: 400px;
+    height: 480px; /* 调整高度以适应所有输入框和按钮 */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 20px;
+    border-radius: 10px;
+}
+
+.register-dialog h3 {
+    text-align: center;
+}
+
+.register-dialog .row {
+    width: 280px;
+    height: 40px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-dialog .row>span {
+    display: inline-block;
+    width: 120px; /* 根据需要调整宽度 */
+    text-align: left; /* 确保文字左对齐 */
+}
+
+.register-dialog .row>input {
+    width: 300px; /* 根据需要调整宽度 */
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    margin-left: 10px; /* 确保输入框与标签之间有间距 */
+}
+
+.register-dialog .verificationCodeImg {
+    display: block; /* 确保图片在新的行中显示 */
+    margin-top: 10px; /* 添加上边距以分隔输入框和图片 */
+    margin-left: auto; /* 自动左边距以居中图片（如果需要的话） */
+    margin-right: auto; /* 自动右边距以居中图片（如果需要的话） */
+    cursor: pointer;
+    border-radius: 5px;
+    max-width: 100%; /* 确保图片不会超出容器宽度 */
+}
+
+
+/* 按钮样式 */
+.button-row {
+    width: 280px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column; /* 垂直方向排列 */
+    align-items: center;    /* 居中对齐 */
+    gap: 10px;              /* 按钮之间的间距 */
+}
+
+.button-row button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 注册按钮样式 */
+#submit {
+    background-color: orange;
+    color: white;
+}
+
+#submit:hover {
+    background-color: darkorange;
+}
+
+/* 返回登录按钮样式 */
+#return {
+    background-color: gray;
+    color: white;
+}
+
+#return:hover {
+    background-color: darkgray;
+}
