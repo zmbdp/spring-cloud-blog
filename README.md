@@ -1,2 +1,2 @@
 # spring-cloud-blog
-码上博客项目源码
+码上博客项目（spring cloud版）源码
