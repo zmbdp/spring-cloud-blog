@@ -1,9 +1,8 @@
 package com.zmbdp.blog.service.service;
 
-import com.zmbdp.springblog.common.pojo.dataobject.BlogInfo;
-import com.zmbdp.springblog.common.pojo.request.AddBlogInfoRequest;
-import com.zmbdp.springblog.common.pojo.request.UpBlogRequest;
-import com.zmbdp.springblog.common.pojo.response.BlogInfoResponse;
+import com.zmbdp.blog.api.pojo.request.AddBlogInfoRequest;
+import com.zmbdp.blog.api.pojo.request.UpBlogRequest;
+import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 
 import java.util.List;
 

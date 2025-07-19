@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class AddBlogInfoRequest {
-    @NotNull(message = "userId不能为空")
+    @NotNull(message = "用户ID不能为空")
     private Integer userId;
     @NotBlank(message = "标题不能为空")
     private String title;

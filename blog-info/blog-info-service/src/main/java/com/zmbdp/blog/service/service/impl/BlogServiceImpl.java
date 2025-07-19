@@ -1,12 +1,12 @@
 package com.zmbdp.blog.service.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.zmbdp.springblog.common.pojo.dataobject.BlogInfo;
-import com.zmbdp.springblog.common.pojo.request.AddBlogInfoRequest;
-import com.zmbdp.springblog.common.pojo.request.UpBlogRequest;
-import com.zmbdp.springblog.common.pojo.response.BlogInfoResponse;
-import com.zmbdp.springblog.mapper.BlogMapper;
-import com.zmbdp.springblog.service.BlogService;
+import com.zmbdp.blog.api.pojo.request.AddBlogInfoRequest;
+import com.zmbdp.blog.api.pojo.request.UpBlogRequest;
+import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
+import com.zmbdp.blog.service.dataobject.BlogInfo;
+import com.zmbdp.blog.service.mapper.BlogMapper;
+import com.zmbdp.blog.service.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.zmbdp.blog.service.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zmbdp.springblog.common.pojo.response.Result;
+import com.zmbdp.common.pojo.Result;
 import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

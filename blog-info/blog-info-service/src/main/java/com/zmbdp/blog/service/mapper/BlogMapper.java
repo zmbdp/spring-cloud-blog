@@ -1,7 +1,7 @@
 package com.zmbdp.blog.service.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zmbdp.springblog.common.pojo.dataobject.BlogInfo;
+import com.zmbdp.blog.service.dataobject.BlogInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

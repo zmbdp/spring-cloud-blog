@@ -1,8 +1,8 @@
 package com.zmbdp.blog.service.config;
 
-import com.zmbdp.springblog.common.enums.ResultCodeEnum;
-import com.zmbdp.springblog.common.exception.BlogException;
-import com.zmbdp.springblog.common.pojo.response.Result;
+import com.zmbdp.common.enums.ResultCodeEnum;
+import com.zmbdp.common.exception.BlogException;
+import com.zmbdp.common.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,7 +30,7 @@ public class ExceptionAdvice {
         return Result.fail(e.getMessage());
     }
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     public Result verifyHandle(Exception e){
         log.error("参数校验失败: {}", e.getMessage());
         return Result.fail("参数校验失败 ");

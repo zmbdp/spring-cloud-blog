@@ -33,6 +33,8 @@
         <mysql.plus.version>3.5.5</mysql.plus.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <blog-info-api.version>1.0-SNAPSHOT</blog-info-api.version>
+        <blog-common.version>1.0-SNAPSHOT</blog-common.version>
     </properties>
 
     <dependencies>

@@ -1,10 +1,13 @@
 package com.zmbdp.blog.service.controller;
 
-import com.zmbdp.springblog.common.pojo.request.AddBlogInfoRequest;
-import com.zmbdp.springblog.common.pojo.request.UpBlogRequest;
-import com.zmbdp.springblog.common.pojo.response.BlogInfoResponse;
-import com.zmbdp.springblog.common.pojo.response.Result;
-import com.zmbdp.springblog.service.BlogService;
+import com.zmbdp.blog.api.pojo.request.AddBlogInfoRequest;
+import com.zmbdp.blog.api.pojo.request.UpBlogRequest;
+import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
+import com.zmbdp.blog.service.service.BlogService;
+import com.zmbdp.common.pojo.Result;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -12,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +39,7 @@ public class BlogController {
      * @return 博客
      */
     @RequestMapping("/getBlogDetail")
-    public BlogInfoResponse getBlogDetail(@NotNull Integer blogId, HttpServletRequest request) {
+    public BlogInfoResponse getBlogDetail(@NotNull Integer blogId) {
         log.info("getBlogDetail, blogId: {}", blogId);
         return blogService.getBlogDetail(blogId);
     }
