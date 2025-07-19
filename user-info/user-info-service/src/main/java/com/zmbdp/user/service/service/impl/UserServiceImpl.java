@@ -6,6 +6,7 @@ import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.common.utils.JWTUtils;
+import com.zmbdp.common.utils.RegexUtil;
 import com.zmbdp.common.utils.SecurityUtil;
 import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.UserInfoRegisterRequest;
@@ -132,8 +133,17 @@ public class UserServiceImpl implements UserService {
             throw new BlogException("当前名字重复啦, 小博会弄混掉的(T_T)");
         }
         // 密码格式
+        if (!RegexUtil.checkPassword(registerUserInfo.getPassword())) {
+            throw new BlogException("密码过于简单了, 坏人一下子就进去了呢, 请输入6-20位的密码哦(●ˇ∀ˇ●)");
+        }
         // 邮箱格式
+        if (!RegexUtil.checkMail(registerUserInfo.getEmail())) {
+            throw new BlogException("小博帮你检查到邮箱格式不对呢, 请检查邮箱格式哦~");
+        }
         // github地址格式
+        if (!RegexUtil.checkGithubUrl(registerUserInfo.getGithubUrl())) {
+            throw new BlogException("小博很生气, 这样的GitHub简直就是再逗小博(╯▔皿▔)╯");
+        }
     }
 
     /**
