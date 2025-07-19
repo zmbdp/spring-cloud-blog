@@ -1,11 +1,11 @@
 package com.zmbdp.blog.service.controller;
 
+import com.zmbdp.blog.api.BlogServiceApi;
 import com.zmbdp.blog.api.pojo.request.AddBlogInfoRequest;
 import com.zmbdp.blog.api.pojo.request.UpBlogRequest;
 import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 import com.zmbdp.blog.service.service.BlogService;
 import com.zmbdp.common.pojo.Result;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/blog")
-public class BlogController {
+public class BlogController implements BlogServiceApi {
     @Autowired
     private BlogService blogService;
 
@@ -28,9 +28,9 @@ public class BlogController {
      * 获取博客列表
      * @return 博客列表
      */
-    @RequestMapping("/getList")
-    public List<BlogInfoResponse> getList(){
-        return blogService.getList();
+    @Override
+    public Result<List<BlogInfoResponse>> getList(){
+        return Result.success(blogService.getList());
     }
 
     /**
@@ -38,10 +38,10 @@ public class BlogController {
      * @param blogId 博客 id
      * @return 博客
      */
-    @RequestMapping("/getBlogDetail")
-    public BlogInfoResponse getBlogDetail(@NotNull Integer blogId) {
+    @Override
+    public Result<BlogInfoResponse> getBlogDetail(@NotNull Integer blogId) {
         log.info("getBlogDetail, blogId: {}", blogId);
-        return blogService.getBlogDetail(blogId);
+        return Result.success(blogService.getBlogDetail(blogId));
     }
 
     /**
@@ -49,26 +49,31 @@ public class BlogController {
      * @param upBlogRequest 修改的博客信息
      * @return 修改的行数
      */
-    @RequestMapping("/update")
-    public Boolean update(@Valid @RequestBody UpBlogRequest upBlogRequest) {
+    @Override
+    public Result<Boolean> update(@Valid @RequestBody UpBlogRequest upBlogRequest) {
         log.info("updateBlog 接收参数: "+ upBlogRequest);
-        return blogService.update(upBlogRequest);
+        return Result.success(blogService.update(upBlogRequest));
     }
     /**
      * 删除博客
-     * @param blogId
-     * @return
+     * @param blogId 博客 id
+     * @return 删除的行数
      */
-    @RequestMapping("/delete")
-    public Boolean delete(@NotNull Integer blogId) {
+    @Override
+    public Result<Boolean> delete(@NotNull Integer blogId) {
         if (blogId == null || blogId < 1) {
-            return false;
+            throw new RuntimeException("服务器繁忙,请稍后重试");
         }
         log.info("deleteBlog 接收参数: "+ blogId);
-        return blogService.delete(blogId);
+        return Result.success(blogService.delete(blogId));
     }
 
-    @RequestMapping("/insertBlog")
+    /**
+     * 添加博客
+     * @param addBlogInfoRequest 添加的博客信息
+     * @return 添加的行数
+     */
+    @Override
     public Result<Boolean> insertBlog(@Validated @RequestBody AddBlogInfoRequest addBlogInfoRequest) {
         log.info("addBlog 接收参数: "+ addBlogInfoRequest);
         return Result.success(blogService.addBlog(addBlogInfoRequest));

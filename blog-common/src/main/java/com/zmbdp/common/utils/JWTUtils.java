@@ -25,8 +25,8 @@ public class JWTUtils {
 
     /**
      * 生成 token
-     * @param claim
-     * @return
+     * @param claim 载荷信息
+     * @return token
      */
     public static String genJwt(Map<String, Object> claim) {
         String resultJWT = Jwts.builder()

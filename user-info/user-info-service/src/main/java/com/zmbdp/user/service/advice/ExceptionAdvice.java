@@ -1,4 +1,4 @@
-package com.zmbdp.blog.service.config;
+package com.zmbdp.user.service.advice;
 
 import com.zmbdp.common.enums.ResultCodeEnum;
 import com.zmbdp.common.exception.BlogException;
@@ -30,7 +30,7 @@ public class ExceptionAdvice {
         return Result.fail(e.getMessage());
     }
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, MethodArgumentNotValidException.class})
     public Result verifyHandle(Exception e){
         log.error("参数校验失败: {}", e.getMessage());
         return Result.fail("参数校验失败 ");

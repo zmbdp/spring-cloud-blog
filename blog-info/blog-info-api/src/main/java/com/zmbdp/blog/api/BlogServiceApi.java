@@ -5,9 +5,9 @@ import com.zmbdp.blog.api.pojo.request.UpBlogRequest;
 import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 import com.zmbdp.common.pojo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface BlogServiceApi {
      * @return 博客列表
      */
     @RequestMapping("/getList")
-    List<BlogInfoResponse> getList();
+    Result<List<BlogInfoResponse>> getList();
 
     /**
      * 根据博客 id 获取博客
@@ -29,7 +29,7 @@ public interface BlogServiceApi {
      * @return 博客
      */
     @RequestMapping("/getBlogDetail")
-    BlogInfoResponse getBlogDetail(Integer blogId);
+    Result<BlogInfoResponse> getBlogDetail(@RequestParam("blogId") Integer blogId);
 
     /**
      * 修改博客
@@ -38,7 +38,7 @@ public interface BlogServiceApi {
      * @return 修改的行数
      */
     @RequestMapping("/update")
-    Boolean update(@RequestBody UpBlogRequest upBlogRequest);
+    Result<Boolean> update(@RequestBody UpBlogRequest upBlogRequest);
 
     /**
      * 删除博客
@@ -47,8 +47,14 @@ public interface BlogServiceApi {
      * @return 删除的行数
      */
     @RequestMapping("/delete")
-    Boolean delete(Integer blogId);
+    Result<Boolean> delete(@RequestParam("blogId") Integer blogId);
 
+    /**
+     * 添加博客
+     *
+     * @param addBlogInfoRequest 添加的博客信息
+     * @return 添加的行数
+     */
     @RequestMapping("/insertBlog")
-    Result<Boolean> insertBlog(@Validated @RequestBody AddBlogInfoRequest addBlogInfoRequest);
+    Result<Boolean> insertBlog(@RequestBody AddBlogInfoRequest addBlogInfoRequest);
 }
