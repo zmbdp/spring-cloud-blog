@@ -6,6 +6,10 @@
     <file url="file://$PROJECT_DIR$/blog-info/blog-info-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog-info/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog-info/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/captcha-info/captcha-info-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/captcha-info/captcha-info-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/captcha-info/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/captcha-info/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/captcha/captcha-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/captcha/captcha-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/captcha/src/main/java" charset="UTF-8" />
@@ -16,5 +20,6 @@
     <file url="file://$PROJECT_DIR$/user-info/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-info/user-info-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-info/user-info-service/src/main/java" charset="UTF-8" />
+    <file url="file://$APPLICATION_HOME_DIR$/bin/src/main/java" charset="UTF-8" />
   </component>
 </project>

@@ -24,6 +24,10 @@ public class UserInfoRegisterRequest {
     @Length(min = 6, message = "这个邮箱太短了...小博怕发验证码时会迷路呢 (´･_･`)")
     private String email;
 
+    @NotBlank(message = "哎呀，验证码空空的呢~ 请填写后再试试吧 (｡•́︿•̀｡)")
+    @Length(max = 6, min = 6, message = "验证码必须是6个字符哦，请检查后再输入~ (´• ω •`)")
+    private String inputCaptcha;
+
     /*@NotBlank(message = "用户名不能为空")
     @Length(max = 20, message = "用户名不能超过20位")
     private String userName;

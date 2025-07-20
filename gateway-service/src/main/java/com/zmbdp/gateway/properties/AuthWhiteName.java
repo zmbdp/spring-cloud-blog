@@ -12,6 +12,5 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix = "auth.white")
 public class AuthWhiteName {
-
     private List<String> url;
 }

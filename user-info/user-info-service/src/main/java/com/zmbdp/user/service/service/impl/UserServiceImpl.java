@@ -12,6 +12,7 @@ import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.UserInfoRegisterRequest;
 import com.zmbdp.user.api.pojo.response.UserInfoResponse;
 import com.zmbdp.user.api.pojo.response.UserLoginResponse;
+import com.zmbdp.user.service.config.CaptchaConfig;
 import com.zmbdp.user.service.dataobject.UserInfo;
 import com.zmbdp.user.service.mapper.UserInfoMapper;
 import com.zmbdp.user.service.service.UserService;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BlogServiceApi blogServiceApi;
 
+    @Autowired
+    private CaptchaConfig CaptchaConfig;
+
     /**
      * 登录接口
      *
@@ -41,9 +45,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserLoginResponse login(LoginUserInfoRequest loginUserInfoRequest) {
-        // 验证验证码是否正确，gateway 里面验证
+        // 验证验证码是否正确
+        boolean b = CaptchaConfig.checkCaptcha(loginUserInfoRequest.getEmail(), loginUserInfoRequest.getInputCaptcha());
+        if (!b) {
+            throw new BlogException("小博提醒~验证码好像写错了哦, 嘿嘿(*^_^*)");
+        }
         //验证账号密码是否正确
-        UserInfo userInfo = selectUserInfoByName(loginUserInfoRequest.getUserName());
+        UserInfo userInfo = selectUserInfoByEmail(loginUserInfoRequest.getEmail());
         if (
                 userInfo == null || userInfo.getId() == null ||
                         !SecurityUtil.verify(loginUserInfoRequest.getPassword(), userInfo.getPassword())
@@ -53,7 +61,7 @@ public class UserServiceImpl implements UserService {
         //账号密码正确的逻辑
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userInfo.getId());
-        claims.put("name", userInfo.getUserName());
+        claims.put("email", userInfo.getEmail());
 
         String jwt = JWTUtils.genJwt(claims);
         return new UserLoginResponse(userInfo.getId(), jwt);
@@ -106,7 +114,12 @@ public class UserServiceImpl implements UserService {
      * @return 注册成功返回 true，否则返回 false
      */
     public Integer register(UserInfoRegisterRequest registerUserInfo) {
-        // 参数校验: 用户名不能重复, 密码格式, 邮箱格式, github地址格式
+        // 验证验证码是否正确
+        boolean b = CaptchaConfig.checkCaptcha(registerUserInfo.getEmail(), registerUserInfo.getInputCaptcha());
+        if (!b) {
+            throw new BlogException("小博提醒~验证码好像写错了哦, 嘿嘿(*^_^*)");
+        }
+        // 参数校验: 用户名可以重复, 密码格式, 邮箱格式, 邮箱不能重复, github地址格式
         checkUserInfo(registerUserInfo);
         // 判断一下，如果数据库返回 0，就是没插入成功，说明用户存在
         UserInfo userInfo = new UserInfo();
@@ -116,31 +129,21 @@ public class UserServiceImpl implements UserService {
         try {
             flag = insertBlog(userInfo);
         } catch (Exception e) {
-            log.error("用户注册失败, 用户名: {}, 用户id: {}, e: {}", registerUserInfo.getUserName(), userInfo.getId(), e.getMessage());
+            log.error("用户注册失败, 用户email: {}, 用户id: {}, e: {}", registerUserInfo.getEmail(), userInfo.getId(), e.getMessage());
             throw new BlogException("请联系管理员哦, 小博罢工飞走噜(～￣(OO)￣)ブ");
         }
         if (flag == 0) {
             throw new BlogException("用户注册失败, 小博太没用了/(ㄒoㄒ)/~~");
         }
-        log.info("用户注册成功, 用户名: {}, 用户id: {}", registerUserInfo.getUserName(), userInfo.getId());
+        log.info("用户注册成功, 用户email: {}, 用户id: {}", registerUserInfo.getEmail(), userInfo.getId());
         return userInfo.getId();
     }
 
     private void checkUserInfo(UserInfoRegisterRequest registerUserInfo) {
-        // 用户名不能重复
-        UserInfo userInfo = selectUserInfoByName(registerUserInfo.getUserName());
-        if (userInfo != null) {
-            log.warn("用户名重复检测触发｜用户名：{}", registerUserInfo.getUserName()); // 日志保持专业
-            throw new BlogException(
-                    "「" + registerUserInfo.getUserName() + "」这个名字已经被抢注啦！\n" +
-                            "小博建议：\n" +
-                            "1. 试试加上生日或特殊符号\n" +
-                            "2. 用中文昵称更独特哦 (๑•̀ㅂ•́)و✧"
-            );
-        }
+        // 用户名可以重复
         // 密码格式
         if (!RegexUtil.checkPassword(registerUserInfo.getPassword())) {
-            log.warn("弱密码拦截｜用户名：{}", registerUserInfo.getUserName());
+            log.error("弱密码拦截｜用户名：{}", registerUserInfo.getEmail());
             throw new BlogException(
                     "⚠️ 密码安全感不足！小博担心你的账号被坏人撬开 (´；ω；`)\n" +
                             "安全密码配方：\n" +
@@ -151,13 +154,29 @@ public class UserServiceImpl implements UserService {
         }
         // 邮箱格式
         if (!RegexUtil.checkMail(registerUserInfo.getEmail())) {
-            log.warn("邮箱格式异常｜输入值：{}", registerUserInfo.getEmail());
+            log.error("邮箱格式异常｜输入值：{}", registerUserInfo.getEmail());
             throw new BlogException(
                     "邮箱「" + registerUserInfo.getEmail() + "」格式让小博困惑了 (⊙_⊙)?\n" +
                             "正确结构示例：\n" +
                             "• 英文邮箱： username@example.com\n" +
                             "• QQ邮箱： 123456@qq.com\n" +
                             "• 注意别多空格哦~"
+            );
+        }
+        // 邮箱不能个重复
+        UserInfo userInfo = selectUserInfoByEmail(registerUserInfo.getEmail());
+        if (userInfo != null) {
+            log.error("用户邮箱重复检测触发｜用户邮箱：{}", registerUserInfo.getEmail()); // 日志保持专业
+            // 前端展示版, 不会前端的话可以试试这个
+//            throw new BlogException(
+//                    "<div style='font-family: Arial, sans-serif; color: #333;'>" +
+//                            "  <p>✨ 哎呀~ 邮箱「" + registerUserInfo.getEmail() + "」的主人已经入驻小博的星球啦！(✧ω✧)</p>" +
+//                            "  <p>试试用其他邮箱注册，或者检查是否已经注册过？</p>" +
+//                            "</div>"
+//            );
+            throw new BlogException(
+                    "✨ 哎呀~ 邮箱「" + registerUserInfo.getEmail() + "」的主人已经入驻小博的星球啦！(✧ω✧)\n" +
+                            "试试用其他邮箱注册，或者检查是否已经注册过？"
             );
         }
         // github地址格式
@@ -176,12 +195,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 根据用户名查询用户信息
      *
-     * @param userName 用户名
+     * @param email 用户 邮箱
      * @return 用户信息
      */
-    public UserInfo selectUserInfoByName(String userName) {
+    public UserInfo selectUserInfoByEmail(String email) {
         return userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
-                .eq(UserInfo::getUserName, userName).eq(UserInfo::getDeleteFlag, 0));
+                .eq(UserInfo::getEmail, email).eq(UserInfo::getDeleteFlag, 0));
     }
 
     /**

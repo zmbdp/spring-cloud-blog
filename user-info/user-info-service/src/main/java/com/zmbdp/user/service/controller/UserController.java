@@ -33,7 +33,7 @@ public class UserController implements UserServiceApi {
      */
     @Override
     public Result<UserLoginResponse> login(@Validated @RequestBody LoginUserInfoRequest user) {
-        log.info("用户登录, userName: {}", user.getUserName());
+        log.info("用户登录, userEmail: {}", user.getEmail());
         return Result.success(userService.login(user));
     }
 

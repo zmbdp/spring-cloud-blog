@@ -18,4 +18,7 @@ spring:
           uri: lb://blog-service
           predicates:
             - Path=/blog/**
-
+        - id: captcha-service
+          uri: lb://captcha-service
+          predicates:
+            - Path=/captcha/**

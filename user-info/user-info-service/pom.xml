@@ -100,6 +100,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zmbdp</groupId>
+            <artifactId>captcha-info-api</artifactId>
+            <version>${captcha-info-api.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

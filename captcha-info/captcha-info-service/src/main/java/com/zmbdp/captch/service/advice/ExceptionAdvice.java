@@ -1,6 +1,7 @@
-package com.zmbdp.user.service.advice;
+package com.zmbdp.captch.service.advice;
 
 import com.zmbdp.common.exception.BlogException;
+import com.zmbdp.common.exception.CaptchaException;
 import com.zmbdp.common.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,12 @@ public class ExceptionAdvice {
     public Result handleBlogException(BlogException e) {
         log.error("业务异常: {}", e.getMessage());
         return Result.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(CaptchaException.class)
+    public String handleCaptchaException(CaptchaException e) {
+        // 这个是专门处理没发送成功的验证码的
+        return e.getMessage();
     }
 
     // 处理参数校验异常（重点修改这里！）

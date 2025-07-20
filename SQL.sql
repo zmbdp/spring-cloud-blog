@@ -15,13 +15,13 @@ create table spring_cloud_blog_user.user_info
     `create_time` datetime default now(),
     `update_time` datetime default now() on update now(), -- 更新时间
     primary key (id),
-    unique index user_name_unique (user_name asc)
+    unique index email_unique (email asc)
 ) engine = innodb default character set = utf8mb4 comment = '用户表';
 
 -- 新增用户信息
-insert into spring_cloud_blog_user.user_info (user_name, password, github_url) values ("稚名不带撇", "d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e", "https://github.com/zmbdp");
-insert into spring_cloud_blog_user.user_info (user_name, password, github_url) values ("zhangsan","d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e","https://gitee.com/zmbdp");
-insert into spring_cloud_blog_user.user_info (user_name, password, github_url) values ("lisi","d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e","https://gitee.com/zmbdp");
+insert into spring_cloud_blog_user.user_info (user_name, password,email, github_url) values ("稚名不带撇", "d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e","Javafh@163.com", "https://github.com/zmbdp");
+insert into spring_cloud_blog_user.user_info (user_name, password,email, github_url) values ("zhangsan","d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e","3566983494@qq.com", "https://gitee.com/zmbdp");
+insert into spring_cloud_blog_user.user_info (user_name, password,email, github_url) values ("lisi","d5965f63e48140cf9f8128f6ba24c82ee10adc3949ba59abbe56e057f20f883e","z3566983494@gmail.com", "https://gitee.com/zmbdp");
 
 
 -- 博客服务数据库

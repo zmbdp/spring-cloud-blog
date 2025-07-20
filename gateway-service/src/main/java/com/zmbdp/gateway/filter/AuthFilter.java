@@ -1,6 +1,5 @@
 package com.zmbdp.gateway.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.common.utils.JWTUtils;
@@ -9,7 +8,6 @@ import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -36,7 +34,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Autowired
     private AuthWhiteName authWhiteName;
 
-//    private List<String> whiteList = List.of("/user/login", "/user/register");
+    //    private List<String> whiteList = List.of("/user/login", "/user/register");
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 配置白名单, 如果在白名单中, 则不进行验证
@@ -53,7 +51,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         log.info("从 header 中获取 token: {}", userToken);
         if (!StringUtils.hasLength(userToken)) {
             // 验证码不存在, 拦截
-            log.info("验证码不存在, 拦截");
+            log.info("token 不存在, 拦截");
             return unauthorizedResponse(exchange, "请先登录, 才能看小博哦~");
         }
 
@@ -80,7 +78,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     }
 
     private Boolean match(List<String> urls, String path) {
-        
+
         if (urls == null || urls.isEmpty()) {
             return false;
         }

@@ -15,6 +15,7 @@
         <module>user-info</module>
         <module>gateway-service</module>
         <module>blog-common</module>
+        <module>captcha-info</module>
     </modules>
 
     <!-- 完善依赖 -->
@@ -36,6 +37,7 @@
         <blog-info-api.version>1.0-SNAPSHOT</blog-info-api.version>
         <blog-common.version>1.0-SNAPSHOT</blog-common.version>
         <user-info-api.version>1.0-SNAPSHOT</user-info-api.version>
+        <captcha-info-api.version>1.0-SNAPSHOT</captcha-info-api.version>
     </properties>
 
     <dependencies>
