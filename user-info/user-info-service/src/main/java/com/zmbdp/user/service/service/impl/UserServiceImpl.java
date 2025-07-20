@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
                 userInfo == null || userInfo.getId() == null ||
                         !SecurityUtil.verify(loginUserInfoRequest.getPassword(), userInfo.getPassword())
         ) {
-            throw new BlogException("用户名或密码错误");
+            throw new BlogException("小博提醒~用户名或者密码好像写错了哦, 嘿嘿(*^_^*)");
         }
         //账号密码正确的逻辑
         Map<String, Object> claims = new HashMap<>();
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         Result<BlogInfoResponse> blogInfoResponseResult = blogServiceApi.getBlogDetail(blogId);
         //2. 根据作者ID, 获取作者信息
         if (blogInfoResponseResult == null || blogInfoResponseResult.getData() == null) {
-            throw new BlogException("博客不存在");
+            throw new BlogException("小博好像想不起来这篇博客呢(；′⌒`)");
         }
         UserInfoResponse userInfoResponse = new UserInfoResponse();
         UserInfo userInfo = null;
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
             userInfo = selectUserInfoById(blogInfoResponseResult.getData().getUserId());
             BeanUtils.copyProperties(userInfo, userInfoResponse);
         } catch (Exception e) {
-            throw new BlogException("改用户不存在");
+            throw new BlogException("小博找不到这篇博客的作者了QAQ");
         }
         return userInfoResponse;
     }
@@ -130,19 +130,46 @@ public class UserServiceImpl implements UserService {
         // 用户名不能重复
         UserInfo userInfo = selectUserInfoByName(registerUserInfo.getUserName());
         if (userInfo != null) {
-            throw new BlogException("当前名字重复啦, 小博会弄混掉的(T_T)");
+            log.warn("用户名重复检测触发｜用户名：{}", registerUserInfo.getUserName()); // 日志保持专业
+            throw new BlogException(
+                    "「" + registerUserInfo.getUserName() + "」这个名字已经被抢注啦！\n" +
+                            "小博建议：\n" +
+                            "1. 试试加上生日或特殊符号\n" +
+                            "2. 用中文昵称更独特哦 (๑•̀ㅂ•́)و✧"
+            );
         }
         // 密码格式
         if (!RegexUtil.checkPassword(registerUserInfo.getPassword())) {
-            throw new BlogException("密码过于简单了, 坏人一下子就进去了呢, 请输入6-20位的密码哦(●ˇ∀ˇ●)");
+            log.warn("弱密码拦截｜用户名：{}", registerUserInfo.getUserName());
+            throw new BlogException(
+                    "⚠️ 密码安全感不足！小博担心你的账号被坏人撬开 (´；ω；`)\n" +
+                            "安全密码配方：\n" +
+                            "• 大小写字母混合（如 BoKe123）\n" +
+                            "• 加个特殊符号更保险（!@#）\n" +
+                            "• 别用生日/手机号呀"
+            );
         }
         // 邮箱格式
         if (!RegexUtil.checkMail(registerUserInfo.getEmail())) {
-            throw new BlogException("小博帮你检查到邮箱格式不对呢, 请检查邮箱格式哦~");
+            log.warn("邮箱格式异常｜输入值：{}", registerUserInfo.getEmail());
+            throw new BlogException(
+                    "邮箱「" + registerUserInfo.getEmail() + "」格式让小博困惑了 (⊙_⊙)?\n" +
+                            "正确结构示例：\n" +
+                            "• 英文邮箱： username@example.com\n" +
+                            "• QQ邮箱： 123456@qq.com\n" +
+                            "• 注意别多空格哦~"
+            );
         }
         // github地址格式
         if (!RegexUtil.checkGithubUrl(registerUserInfo.getGithubUrl())) {
-            throw new BlogException("小博很生气, 这样的GitHub简直就是再逗小博(╯▔皿▔)╯");
+            log.warn("GitHub URL无效｜输入值：{}", registerUserInfo.getGithubUrl());
+            throw new BlogException(
+                    "HTTP 400：URL格式异常！(╯°□°）╯︵ ┻━┻\n" +
+                            "小博检测到以下问题：\n" +
+                            "• 缺少协议头（https://）\n" +
+                            "• 或包含非法字符\n" +
+                            "正确示例看这里 => https://github.com/yourname"
+            );
         }
     }
 

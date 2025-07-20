@@ -54,14 +54,14 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (!StringUtils.hasLength(userToken)) {
             // 验证码不存在, 拦截
             log.info("验证码不存在, 拦截");
-            return unauthorizedResponse(exchange, "请先登录哦~~");
+            return unauthorizedResponse(exchange, "请先登录, 才能看小博哦~");
         }
 
         Claims claims = JWTUtils.parseToken(userToken);
         if (claims == null) {
             // 证明 token 不合法
             log.info("令牌验证失败, 拦截");
-            return unauthorizedResponse(exchange, "登录已过期, 请先登录哦~~");
+            return unauthorizedResponse(exchange, "登录时间太久, 小博想不起来你是谁了QAQ");
         }
         log.info("令牌验证通过, 放行");
         return chain.filter(exchange);

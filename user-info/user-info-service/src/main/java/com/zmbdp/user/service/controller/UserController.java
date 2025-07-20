@@ -56,8 +56,8 @@ public class UserController implements UserServiceApi {
      */
     @Override
     public Result<UserInfoResponse> getAuthorInfo(@NotNull Integer blogId) {
-        if (blogId < 1) {
-            return Result.fail("服务器繁忙, 请稍后重试");
+        if (blogId < 0) {
+            return Result.fail("请联系管理员哦, 小博罢工飞走噜(～￣(OO)￣)ブ");
         }
         return Result.success(userService.selectAuthorInfoByBlogId(blogId));
     }
@@ -71,11 +71,11 @@ public class UserController implements UserServiceApi {
     @Override
     public Result<Integer> register(@Validated @RequestBody UserInfoRegisterRequest userInfoRegisterRequest) {
         // 判断验证码是否正确，然后直接把用户的信息存到文件里面
-        if (
-                !StringUtils.hasLength(userInfoRegisterRequest.getUserName()) ||
-                        !StringUtils.hasLength(userInfoRegisterRequest.getPassword())
-        ) {
-            return Result.fail("注册信息不完整, 请仔细检查");
+        if (!StringUtils.hasLength(userInfoRegisterRequest.getUserName())) {
+            return Result.fail("好歹让小博可以知道怎么称呼你吧喂(#`O′)");
+        }
+        if (!StringUtils.hasLength(userInfoRegisterRequest.getPassword())) {
+            return Result.fail("小博建议您, 还是输入一下密码叭~");
         }
         return Result.success(userService.register(userInfoRegisterRequest));
     }

@@ -1,24 +1,41 @@
 package com.zmbdp.user.api.pojo.request;
 
 import jakarta.validation.constraints.NotBlank;
-
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 public class UserInfoRegisterRequest {
-    @NotBlank(message = "好歹让小博可以知道怎么称呼你吧喂(#`O′)")
-    @Length(max = 20, message = "用户名设置的过长, 小博要坏掉啦 QAQ, 建议20位以下哦~")
+    @NotBlank(message = "用户名呢？！小博才不会叫你'喂'呢！(╬ Ò﹏Ó)")
+    @Length(max = 20, message = "20字以内！小博的脑容量有限啊！(╯‵□′)╯︵┻━┻")
     private String userName;
-    @NotBlank(message = "小博建议您, 还是输入一下密码叭~")
+
+    @NotBlank(message = "密码空着的话...坏人会闯进小博家里的！(╬ Ò﹏Ó)")
     @Length(max = 20, message = "密码设置的过长, 小博记不住怎么办 /(ㄒoㄒ)/~~, 建议20位以下哦~")
-    @Length(min = 6, message = "密码设置的太短啦, 不怕小博偷偷看你隐私嘛? 建议6位以上哦~")
+    @Length(min = 6, message = "密码需要至少6位才能保护好我们的秘密呢 (｀・ω・´)")
     private String password;
-    @Length(max = 128, message = "github地址太长啦, 小博要被玩坏掉啦 QAQ, 建议128以下哦~")
-    @Length(min = 11, message = "这么短的github地址, 你是不是把小博当傻子呢(瞪O.O)")
+
+    @Length(max = 128, message = "GitHub地址太长啦！小博的地址簿要爆炸了 (╯°□°）╯︵ ┻━┻")
+    @Length(min = 11, message = "你管这叫GitHub地址？欺负小博不懂技术？(눈_눈)")
     private String githubUrl;
-    @NotBlank(message = "请输入邮箱账号~")
+
+    @NotBlank(message = "邮箱交出来！不然小博怎么发验证码！(〃＞目＜)")
     @Length(max = 64, message = "邮箱这么长, 你是不是在逗小博呢(・∀・(・∀・(・∀・*), 建议64以下哦~")
-    @Length(min = 6, message = "这么短的邮箱, 难道你是vip用户嘛o.O?")
+    @Length(min = 6, message = "这个邮箱太短了...小博怕发验证码时会迷路呢 (´･_･`)")
     private String email;
+
+    /*@NotBlank(message = "用户名不能为空")
+    @Length(max = 20, message = "用户名不能超过20位")
+    private String userName;
+    @NotBlank(message = "密码不能为空")
+    @Length(max = 20, message = "密码不能超过20位")
+    @Length(min = 6, message = "密码不能低于6位")
+    private String password;
+    @Length(max = 128, message = "GitHubUrl不能超过128位")
+    @Length(min = 11, message = "GitHubUrl不能低于6位")
+    private String githubUrl;
+    @NotBlank(message = "邮箱不能为空")
+    @Length(max = 64, message = "邮箱不能超过64位")
+    @Length(min = 6, message = "邮箱不能低于6位")
+    private String email;*/
 }

@@ -62,7 +62,7 @@ public class BlogController implements BlogServiceApi {
     @Override
     public Result<Boolean> delete(@NotNull Integer blogId) {
         if (blogId == null || blogId < 1) {
-            throw new RuntimeException("服务器繁忙,请稍后重试");
+            throw new RuntimeException("请联系管理员哦, 小博罢工飞走噜(～￣(OO)￣)ブ");
         }
         log.info("deleteBlog 接收参数: "+ blogId);
         return Result.success(blogService.delete(blogId));
