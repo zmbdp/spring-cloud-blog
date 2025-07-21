@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CheckCaptchaResponse {
     private String email;
-    private Boolean checkResult;
+    private boolean checkResult;
 }

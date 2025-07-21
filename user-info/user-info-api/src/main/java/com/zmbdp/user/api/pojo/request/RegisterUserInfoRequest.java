@@ -1,11 +1,12 @@
 package com.zmbdp.user.api.pojo.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-public class UserInfoRegisterRequest {
+public class RegisterUserInfoRequest {
     @NotBlank(message = "用户名呢？！小博才不会叫你'喂'呢！(╬ Ò﹏Ó)")
     @Length(max = 20, message = "20字以内！小博的脑容量有限啊！(╯‵□′)╯︵┻━┻")
     private String userName;
@@ -22,6 +23,7 @@ public class UserInfoRegisterRequest {
     @NotBlank(message = "邮箱交出来！不然小博怎么发验证码！(〃＞目＜)")
     @Length(max = 64, message = "邮箱这么长, 你是不是在逗小博呢(・∀・(・∀・(・∀・*), 建议64以下哦~")
     @Length(min = 6, message = "这个邮箱太短了...小博怕发验证码时会迷路呢 (´･_･`)")
+    @Email(message = "这个邮箱地址看起来不太对呢~ 请检查格式哦 (๑•́ ₃ •̀๑)")
     private String email;
 
     @NotBlank(message = "哎呀，验证码空空的呢~ 请填写后再试试吧 (｡•́︿•̀｡)")

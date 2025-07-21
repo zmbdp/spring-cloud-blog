@@ -19,11 +19,8 @@ public class CaptchaConfig {
     public boolean checkCaptcha(CheckCaptchaRequest checkCaptchaRequest) {
         try {
             CheckCaptchaResponse response = captchaServiceApi.checkCaptcha(checkCaptchaRequest);
-            if (response.getCheckResult() == null) {
-                throw new CaptchaException("验证码偷偷溜走啦~ 请重新获取一个吧 (｡•́︿•̀｡)");
-            }
             // 说明用户没有发验证码
-            return response.getCheckResult();
+            return response.isCheckResult();
         } catch (CaptchaException e) {
             // 明确转译验证码相关异常
             throw new BlogException(e.getMessage());

@@ -6,8 +6,14 @@ import java.util.regex.Pattern;
 
 public class RegexUtil {
 
-    // 密码正则条件: 6-20位, 至少1个大写字母, 1个小写字母, 1个数字
-    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,20}$";
+    public static final String PASSWORD_REGEX =
+            "^(?:(?=.*[a-z])(?=.*[A-Z])|" +          // 小写 + 大写
+                    "(?=.*[a-z])(?=.*\\d)|" +                // 小写 + 数字
+                    "(?=.*[a-z])(?=.*[!@#$%^&*])|" +         // 小写 + 特殊符号
+                    "(?=.*[A-Z])(?=.*\\d)|" +                // 大写 + 数字
+                    "(?=.*[A-Z])(?=.*[!@#$%^&*])|" +        // 大写 + 特殊符号
+                    "(?=.*\\d)(?=.*[!@#$%^&*]))" +          // 数字 + 特殊符号
+                    "[a-zA-Z\\d!@#$%^&*]{6,20}$";
 
     public static final String EMAIL_REGEX =
             "^[a-zA-Z0-9]+(?:[._-][a-zA-Z0-9]+)*@" +            // 本地部分

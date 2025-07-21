@@ -11,7 +11,7 @@ import com.zmbdp.common.utils.JWTUtils;
 import com.zmbdp.common.utils.RegexUtil;
 import com.zmbdp.common.utils.SecurityUtil;
 import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
-import com.zmbdp.user.api.pojo.request.UserInfoRegisterRequest;
+import com.zmbdp.user.api.pojo.request.RegisterUserInfoRequest;
 import com.zmbdp.user.api.pojo.response.UserInfoResponse;
 import com.zmbdp.user.api.pojo.response.UserLoginResponse;
 import com.zmbdp.user.service.config.CaptchaConfig;
@@ -121,7 +121,10 @@ public class UserServiceImpl implements UserService {
      * @param registerUserInfo 想注册用户的注册信息
      * @return 注册成功返回 true，否则返回 false
      */
-    public Integer register(UserInfoRegisterRequest registerUserInfo) {
+    public Integer register(RegisterUserInfoRequest registerUserInfo) {
+        // 参数校验: 用户名可以重复, 密码格式, 邮箱格式, 邮箱不能重复, github地址格式
+        checkUserInfo(registerUserInfo);
+        // 然后判断验证码是否正确
         CheckCaptchaRequest checkCaptchaRequest = splicingCheckCaptchaRequest(
                 registerUserInfo.getEmail(),
                 registerUserInfo.getInputCaptcha(),
@@ -132,15 +135,13 @@ public class UserServiceImpl implements UserService {
         if (!b) {
             throw new BlogException("小博提醒~验证码好像写错了哦, 嘿嘿(*^_^*)");
         }
-        // 参数校验: 用户名可以重复, 密码格式, 邮箱格式, 邮箱不能重复, github地址格式
-        checkUserInfo(registerUserInfo);
         // 判断一下，如果数据库返回 0，就是没插入成功，说明用户存在
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(registerUserInfo, userInfo);
         Integer flag = 0;
         userInfo.setPassword(SecurityUtil.encrypt(registerUserInfo.getPassword()));
         try {
-            flag = insertBlog(userInfo);
+            flag = insertUser(userInfo);
         } catch (Exception e) {
             log.error("用户注册失败, 用户email: {}, 用户id: {}, e: {}", registerUserInfo.getEmail(), userInfo.getId(), e.getMessage());
             throw new BlogException("请联系管理员哦, 小博罢工飞走噜(～￣(OO)￣)ブ");
@@ -168,30 +169,8 @@ public class UserServiceImpl implements UserService {
         return checkCaptchaRequest;
     }
 
-    private void checkUserInfo(UserInfoRegisterRequest registerUserInfo) {
+    private void checkUserInfo(RegisterUserInfoRequest registerUserInfo) {
         // 用户名可以重复
-        // 密码格式
-        if (!RegexUtil.checkPassword(registerUserInfo.getPassword())) {
-            log.error("弱密码拦截｜用户名：{}", registerUserInfo.getEmail());
-            throw new BlogException(
-                    "⚠️ 密码安全感不足！小博担心你的账号被坏人撬开 (´；ω；`)\n" +
-                            "安全密码配方：\n" +
-                            "• 大小写字母混合（如 BoKe123）\n" +
-                            "• 加个特殊符号更保险（!@#）\n" +
-                            "• 别用生日/手机号呀"
-            );
-        }
-        // 邮箱格式
-        if (!RegexUtil.checkMail(registerUserInfo.getEmail())) {
-            log.error("邮箱格式异常｜输入值：{}", registerUserInfo.getEmail());
-            throw new BlogException(
-                    "邮箱「" + registerUserInfo.getEmail() + "」格式让小博困惑了 (⊙_⊙)?\n" +
-                            "正确结构示例：\n" +
-                            "• 英文邮箱： username@example.com\n" +
-                            "• QQ邮箱： 123456@qq.com\n" +
-                            "• 注意别多空格哦~"
-            );
-        }
         // 邮箱不能个重复
         UserInfo userInfo = selectUserInfoByEmail(registerUserInfo.getEmail());
         if (userInfo != null) {
@@ -206,6 +185,28 @@ public class UserServiceImpl implements UserService {
             throw new BlogException(
                     "✨ 哎呀~ 邮箱「" + registerUserInfo.getEmail() + "」的主人已经入驻小博的星球啦！(✧ω✧)\n" +
                             "试试用其他邮箱注册，或者检查是否已经注册过？"
+            );
+        }
+        // 邮箱格式
+        if (!RegexUtil.checkMail(registerUserInfo.getEmail())) {
+            log.error("邮箱格式异常｜输入值：{}", registerUserInfo.getEmail());
+            throw new BlogException(
+                    "邮箱「" + registerUserInfo.getEmail() + "」格式让小博困惑了 (⊙_⊙)?\n" +
+                            "正确结构示例：\n" +
+                            "• 英文邮箱： username@example.com\n" +
+                            "• QQ邮箱： 123456@qq.com\n" +
+                            "• 注意别多空格哦~"
+            );
+        }
+        // 密码格式
+        if (!RegexUtil.checkPassword(registerUserInfo.getPassword())) {
+            log.error("弱密码拦截｜用户名：{}", registerUserInfo.getEmail());
+            throw new BlogException(
+                    "⚠️ 密码安全感不足！小博担心你的账号被坏人撬开 (´；ω；`)\n" +
+                            "安全密码配方：\n" +
+                            "• 大小写字母混合（如 BoKe123）\n" +
+                            "• 加个特殊符号更保险（!@#）\n" +
+                            "• 别用生日/手机号呀"
             );
         }
         // github地址格式
@@ -249,7 +250,7 @@ public class UserServiceImpl implements UserService {
      * @param userInfo 用户信息
      * @return 插入的行数
      */
-    private Integer insertBlog(UserInfo userInfo) {
+    private Integer insertUser(UserInfo userInfo) {
         return userInfoMapper.insert(userInfo);
     }
 }

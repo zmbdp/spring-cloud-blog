@@ -2,7 +2,7 @@ package com.zmbdp.user.service.controller;
 
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.user.api.UserServiceApi;
-import com.zmbdp.user.api.pojo.request.UserInfoRegisterRequest;
+import com.zmbdp.user.api.pojo.request.RegisterUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.response.UserInfoResponse;
 import com.zmbdp.user.api.pojo.response.UserLoginResponse;
@@ -65,18 +65,18 @@ public class UserController implements UserServiceApi {
     /**
      * 注册
      *
-     * @param userInfoRegisterRequest 用户信息
+     * @param registerUserInfoRequest 用户信息
      * @return 注册结果
      */
     @Override
-    public Result<Integer> register(@Validated @RequestBody UserInfoRegisterRequest userInfoRegisterRequest) {
+    public Result<Integer> register(@Validated @RequestBody RegisterUserInfoRequest registerUserInfoRequest) {
         // 判断验证码是否正确，然后直接把用户的信息存到文件里面
-        if (!StringUtils.hasLength(userInfoRegisterRequest.getUserName())) {
+        if (!StringUtils.hasLength(registerUserInfoRequest.getUserName())) {
             return Result.fail("好歹让小博可以知道怎么称呼你吧喂(#`O′)");
         }
-        if (!StringUtils.hasLength(userInfoRegisterRequest.getPassword())) {
+        if (!StringUtils.hasLength(registerUserInfoRequest.getPassword())) {
             return Result.fail("小博建议您, 还是输入一下密码叭~");
         }
-        return Result.success(userService.register(userInfoRegisterRequest));
+        return Result.success(userService.register(registerUserInfoRequest));
     }
 }

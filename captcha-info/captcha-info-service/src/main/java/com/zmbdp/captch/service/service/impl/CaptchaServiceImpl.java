@@ -75,7 +75,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         }
         /*// 邮箱版
         String captcha = setRedisCaptcha(captchaKey, countKey);
-        Boolean sendFlag = false;
+        boolean sendFlag = false;
         // 不为空返回 true
         if (StringUtils.hasText(captcha)) {
             // 开始发送邮箱
@@ -138,7 +138,7 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @param countKey 验证码计数 key
      * @return 存储是否成功
      */
-    private Boolean setRedisCaptcha(String redisKey, String countKey) {
+    private boolean setRedisCaptcha(String redisKey, String countKey) {
         // 先判断验证码是否已经有了
         long captchaCount = redisUtil.incr(countKey);
         if (captchaCount == 1) {
@@ -159,15 +159,15 @@ public class CaptchaServiceImpl implements CaptchaService {
             captcha = switch (captchaLevel) {
                 case 1 -> {
                     log.info("为邮箱 {} 生成简单验证码", redisKey);
-                    yield getSimpleCaptcha(redisKey);
+                    yield getSimpleCaptcha();
                 }
                 case 2 -> {
                     log.info("为邮箱 {} 生成复杂验证码", redisKey);
-                    yield getDifficultyCaptcha(redisKey);
+                    yield getDifficultyCaptcha();
                 }
                 case 3 -> {
                     log.info("为邮箱 {} 混合验证码", redisKey);
-                    yield getMixedSecurityCaptcha(redisKey);
+                    yield getMixedSecurityCaptcha();
                 }
                 default -> throw new CaptchaException(
                         "哎呀，小博突然卡壳了 (´• ω •`)\n" +
@@ -189,10 +189,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     /**
      * 获取验证码(纯数字版)
      *
-     * @param redisKey 邮箱
      * @return 验证码
      */
-    private String getSimpleCaptcha(String redisKey) {
+    private String getSimpleCaptcha() {
         // 生成验证码
         String code = captchaUtil.getSimpleCaptcha(captchaLength);
         if (!StringUtils.hasText(code)) {
@@ -205,10 +204,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     /**
      * 获取验证码(字母数字结合版)
      *
-     * @param redisKey 邮箱
      * @return 验证码
      */
-    private String getDifficultyCaptcha(String redisKey) {
+    private String getDifficultyCaptcha() {
         // 生成验证码
         String code = captchaUtil.getDifficultyCaptcha(captchaLength);
         // 判空
@@ -222,10 +220,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     /**
      * 获取混合验证码
      *
-     * @param redisKey redis key
      * @return 验证码
      */
-    private String getMixedSecurityCaptcha(String redisKey) {
+    private String getMixedSecurityCaptcha() {
         String code = captchaUtil.getMixedCaptcha(captchaLength);
         // 判空
         if (!StringUtils.hasText(code)) {
@@ -249,10 +246,10 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CheckCaptchaResponse checkCaptcha(String email, String inputCode, String captchaType) {
         // 判断验证码类别
         String captchaKey = splicingCaptchaKey(email, captchaType);
-        Boolean checkResult = checkCode(captchaKey, inputCode);
+        boolean checkResult = checkCode(captchaKey, inputCode);
         log.info("验证码校验结果: {}", checkResult);
         // 存储这个邮箱的验证码，先会判断这个验证码是否存在，要是存在的话这是第几次获取验证码了，根据反馈做出下一步抉择
-        if (checkResult != null && checkResult) {
+        if (checkResult) {
             // 从 redis 中删除验证码
             redisUtil.deleteKey(captchaKey);
         }
@@ -268,12 +265,12 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @return 是否通过校验
      * @throws CaptchaException 如果校验失败
      */
-    private Boolean checkCode(String captchaKey, String inputCode) {
+    private boolean checkCode(String captchaKey, String inputCode) {
         // 获取存储的验证码
         String storedCode = redisUtil.getRedis(captchaKey);
         if (!StringUtils.hasText(storedCode)) {
             // 说明 redis 查不到验证码
-            return null;
+            return false;
         }
         // 验证码校验
         return captchaUtil.checkCaptcha(inputCode, storedCode);
