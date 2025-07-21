@@ -30,9 +30,10 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(CaptchaException.class)
-    public String handleCaptchaException(CaptchaException e) {
+    public Result handleCaptchaException(CaptchaException e) {
         // 这个是专门处理没发送成功的验证码的
-        return e.getMessage();
+        log.error("验证码异常: {}", e.getMessage());
+        return Result.fail(e.getMessage());
     }
 
     // 处理参数校验异常（重点修改这里！）

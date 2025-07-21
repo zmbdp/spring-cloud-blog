@@ -9,5 +9,4 @@ public enum ResultCodeEnum {
     FAIL(-1);
     @Getter
     int code;
-
 }

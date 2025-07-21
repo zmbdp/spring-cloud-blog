@@ -2,9 +2,10 @@ package com.zmbdp.captch.service.controller;
 
 import com.zmbdp.captch.service.service.CaptchaService;
 import com.zmbdp.captcha.api.CaptchaServiceApi;
-import com.zmbdp.captcha.api.pojo.request.CaptchaRequest;
-import com.zmbdp.captcha.api.pojo.response.CaptchaResponse;
-import com.zmbdp.captcha.api.pojo.response.CheckResponse;
+import com.zmbdp.captcha.api.pojo.request.CheckCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.request.GetCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.response.GetCaptchaResponse;
+import com.zmbdp.captcha.api.pojo.response.CheckCaptchaResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,25 @@ public class CaptchaController implements CaptchaServiceApi {
 
     /**
      * 获取验证码
-     * @param email 邮箱
+     * @param getCaptchaRequest 邮箱和验证码的类型
      * @return 验证码
      */
     @Override
-    public CaptchaResponse getCaptchaCode(@NotBlank String email) {
-        return captchaService.getCaptchaCode(email);
+    public GetCaptchaResponse getCaptchaCode(@NotBlank @RequestBody GetCaptchaRequest getCaptchaRequest) {
+        return captchaService.getCaptchaCode(getCaptchaRequest);
     }
 
     /**
      * 验证码校验
-     * @param captchaRequest 验证码请求
+     * @param checkCaptchaRequest 验证码请求
      * @return 是否通过
      */
     @Override
-    public CheckResponse checkCaptcha(@Validated @RequestBody CaptchaRequest captchaRequest) {
-        String email = captchaRequest.getEmail();
-        String inputCode = captchaRequest.getInputCaptcha();
+    public CheckCaptchaResponse checkCaptcha(@Validated @RequestBody CheckCaptchaRequest checkCaptchaRequest) {
+        String email = checkCaptchaRequest.getEmail();
+        String inputCode = checkCaptchaRequest.getInputCaptcha();
+        String captchaType = checkCaptchaRequest.getCaptchaType();
         log.info("用户: {} 输入的验证码为：{}",email, inputCode);
-        return captchaService.checkCaptcha(email, inputCode);
+        return captchaService.checkCaptcha(email, inputCode, captchaType);
     }
 }

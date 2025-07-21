@@ -1,12 +1,13 @@
 package com.zmbdp.captch.service.service;
 
-import com.zmbdp.captcha.api.pojo.response.CaptchaResponse;
-import com.zmbdp.captcha.api.pojo.response.CheckResponse;
+import com.zmbdp.captcha.api.pojo.request.GetCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.response.GetCaptchaResponse;
+import com.zmbdp.captcha.api.pojo.response.CheckCaptchaResponse;
 
 public interface CaptchaService {
     // 获取验证码
-    CaptchaResponse getCaptchaCode(String email);
+    GetCaptchaResponse getCaptchaCode(GetCaptchaRequest getCaptchaRequest);
     // 校验验证码
-    CheckResponse checkCaptcha(String email, String inputCode);
+    CheckCaptchaResponse checkCaptcha(String email, String inputCode, String captchaType);
 
 }

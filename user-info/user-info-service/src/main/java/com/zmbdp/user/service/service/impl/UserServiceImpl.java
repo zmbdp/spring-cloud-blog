@@ -3,6 +3,8 @@ package com.zmbdp.user.service.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zmbdp.blog.api.BlogServiceApi;
 import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
+import com.zmbdp.captcha.api.pojo.request.CheckCaptchaRequest;
+import com.zmbdp.common.constant.CaptchaTypeConstants;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.common.utils.JWTUtils;
@@ -45,8 +47,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserLoginResponse login(LoginUserInfoRequest loginUserInfoRequest) {
+        CheckCaptchaRequest checkCaptchaRequest =
+                splicingCheckCaptchaRequest(
+                        loginUserInfoRequest.getEmail(),
+                        loginUserInfoRequest.getInputCaptcha(),
+                        CaptchaTypeConstants.LOGIN_CAPTCHA
+                );
         // 验证验证码是否正确
-        boolean b = CaptchaConfig.checkCaptcha(loginUserInfoRequest.getEmail(), loginUserInfoRequest.getInputCaptcha());
+        boolean b = CaptchaConfig.checkCaptcha(checkCaptchaRequest);
         if (!b) {
             throw new BlogException("小博提醒~验证码好像写错了哦, 嘿嘿(*^_^*)");
         }
@@ -114,8 +122,13 @@ public class UserServiceImpl implements UserService {
      * @return 注册成功返回 true，否则返回 false
      */
     public Integer register(UserInfoRegisterRequest registerUserInfo) {
+        CheckCaptchaRequest checkCaptchaRequest = splicingCheckCaptchaRequest(
+                registerUserInfo.getEmail(),
+                registerUserInfo.getInputCaptcha(),
+                CaptchaTypeConstants.REGISTER_CAPTCHA
+        );
         // 验证验证码是否正确
-        boolean b = CaptchaConfig.checkCaptcha(registerUserInfo.getEmail(), registerUserInfo.getInputCaptcha());
+        boolean b = CaptchaConfig.checkCaptcha(checkCaptchaRequest);
         if (!b) {
             throw new BlogException("小博提醒~验证码好像写错了哦, 嘿嘿(*^_^*)");
         }
@@ -137,6 +150,22 @@ public class UserServiceImpl implements UserService {
         }
         log.info("用户注册成功, 用户email: {}, 用户id: {}", registerUserInfo.getEmail(), userInfo.getId());
         return userInfo.getId();
+    }
+
+    /**
+     * 拼接 CheckCaptchaRequest
+     *
+     * @param email       邮箱
+     * @param inputCaptcha   输入的验证码
+     * @param captchaType 验证码类型
+     * @return CheckCaptchaRequest
+     */
+    private CheckCaptchaRequest splicingCheckCaptchaRequest(String email, String inputCaptcha, String captchaType) {
+        CheckCaptchaRequest checkCaptchaRequest = new CheckCaptchaRequest();
+        checkCaptchaRequest.setEmail(email);
+        checkCaptchaRequest.setInputCaptcha(inputCaptcha);
+        checkCaptchaRequest.setCaptchaType(captchaType);
+        return checkCaptchaRequest;
     }
 
     private void checkUserInfo(UserInfoRegisterRequest registerUserInfo) {

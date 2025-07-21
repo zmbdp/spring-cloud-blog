@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckResponse {
+public class CheckCaptchaResponse {
     private String email;
-    private boolean checkResult;
+    private Boolean checkResult;
 }

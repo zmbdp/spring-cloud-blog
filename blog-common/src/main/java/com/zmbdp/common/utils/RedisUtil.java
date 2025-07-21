@@ -160,6 +160,11 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 对 key 的值进行原子递减（-1）
+     * @param key Redis 键
+     * @return 递减后的值（失败返回 -1）
+     */
     public long decr(String key) {
         try {
             return redisTemplate.opsForValue().decrement(key);

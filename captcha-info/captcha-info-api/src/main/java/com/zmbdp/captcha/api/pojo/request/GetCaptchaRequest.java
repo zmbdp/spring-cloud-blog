@@ -4,13 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-
 @Data
-public class CaptchaRequest {
+public class GetCaptchaRequest {
     @NotBlank()
     @Length(max = 20)
     private String email;
+    /**
+     * 判断验证码的类型， 是登录获取还是注册获取
+     */
     @NotBlank()
-    @Length(max = 20)
-    private String inputCaptcha;
+    private String captchaType;
 }

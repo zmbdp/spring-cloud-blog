@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor // 生成无参构造
 @AllArgsConstructor // 生成有参构造
-public class CaptchaResponse {
+public class GetCaptchaResponse {
     private String email;
-    private String captcha;
+    private Boolean result;
 }

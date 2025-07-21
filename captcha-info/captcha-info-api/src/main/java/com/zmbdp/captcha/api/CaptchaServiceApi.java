@@ -1,20 +1,20 @@
 package com.zmbdp.captcha.api;
 
-import com.zmbdp.captcha.api.pojo.request.CaptchaRequest;
-import com.zmbdp.captcha.api.pojo.response.CaptchaResponse;
-import com.zmbdp.captcha.api.pojo.response.CheckResponse;
+import com.zmbdp.captcha.api.pojo.request.CheckCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.request.GetCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.response.GetCaptchaResponse;
+import com.zmbdp.captcha.api.pojo.response.CheckCaptchaResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "captcha-service", path = "/captcha")
 public interface CaptchaServiceApi {
     // 获取验证码
     @RequestMapping("/getCaptchaCode")
-    CaptchaResponse getCaptchaCode(@RequestParam("email") String email);
+    GetCaptchaResponse getCaptchaCode(@RequestBody GetCaptchaRequest captchaRequest);
     // 校验验证码
     @RequestMapping("/checkCaptcha")
-    CheckResponse checkCaptcha(@RequestBody CaptchaRequest captchaRequest);
+    CheckCaptchaResponse checkCaptcha(@RequestBody CheckCaptchaRequest checkCaptchaRequest);
 
 }
