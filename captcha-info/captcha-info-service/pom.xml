@@ -60,6 +60,12 @@
             <groupId>com.zmbdp</groupId>
             <artifactId>captcha-info-api</artifactId>
             <version>${captcha-info-api.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>blog-common</artifactId>
+                    <groupId>com.zmbdp</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

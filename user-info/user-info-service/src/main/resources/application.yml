@@ -17,7 +17,7 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
-      timeout: 60s # 表示redis操作超时时间, 表示连接空闲超过N(s秒, ms毫秒)后就会自动关闭连接
+      timeout: 60s # 表示 redis 操作超时时间, 表示连接空闲超过 N(s秒, ms毫秒) 后就会自动关闭连接
       lettuce:
         pool:
           max-active: 8 # 允许的最大连接数

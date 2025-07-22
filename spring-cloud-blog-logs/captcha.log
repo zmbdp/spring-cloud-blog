@@ -1,0 +1,60 @@
+2025-07-23T00:00:20.541+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.controller.CaptchaController     : 用户: 177849176713@qq.com 输入的验证码为：G@Lg3j
+2025-07-23T00:00:20.666+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:00:29.178+08:00  INFO 19708 --- [http-nio-443-exec-2] c.z.c.s.service.impl.CaptchaServiceImpl  : 为邮箱 captcha:register:17784917673@qq.com 混合验证码
+2025-07-23T00:08:11.244+08:00  INFO 19708 --- [http-nio-443-exec-5] c.z.c.s.service.impl.CaptchaServiceImpl  : 为邮箱 captcha:login:17784917673@qq.com 混合验证码
+2025-07-23T00:08:23.876+08:00  INFO 19708 --- [http-nio-443-exec-6] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：4nzZt7
+2025-07-23T00:08:23.887+08:00  INFO 19708 --- [http-nio-443-exec-6] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:08:26.238+08:00  INFO 19708 --- [http-nio-443-exec-7] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：4nzZt7
+2025-07-23T00:08:26.251+08:00  INFO 19708 --- [http-nio-443-exec-7] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:08:39.180+08:00  INFO 19708 --- [http-nio-443-exec-8] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：s*G!Le
+2025-07-23T00:08:39.222+08:00  INFO 19708 --- [http-nio-443-exec-8] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: true
+2025-07-23T00:09:44.403+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：s*G!Le
+2025-07-23T00:09:44.486+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:10:16.591+08:00  INFO 19708 --- [http-nio-443-exec-2] c.z.c.s.service.impl.CaptchaServiceImpl  : 为邮箱 captcha:login:17784917673@qq.com 混合验证码
+2025-07-23T00:10:36.567+08:00  INFO 19708 --- [http-nio-443-exec-3] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：s*G!Le
+2025-07-23T00:10:36.578+08:00  INFO 19708 --- [http-nio-443-exec-3] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:10:51.966+08:00  INFO 19708 --- [http-nio-443-exec-4] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：Epg#Bz
+2025-07-23T00:10:51.979+08:00  INFO 19708 --- [http-nio-443-exec-4] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: true
+2025-07-23T00:13:29.354+08:00  INFO 19708 --- [http-nio-443-exec-7] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：Epg#Bz
+2025-07-23T00:13:29.365+08:00  INFO 19708 --- [http-nio-443-exec-7] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:13:42.290+08:00  INFO 19708 --- [http-nio-443-exec-8] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：Epg#Bz
+2025-07-23T00:13:42.307+08:00  INFO 19708 --- [http-nio-443-exec-8] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:14:49.311+08:00  INFO 19708 --- [http-nio-443-exec-10] c.z.c.s.service.impl.CaptchaServiceImpl  : 为邮箱 captcha:login:17784917673@qq.com 混合验证码
+2025-07-23T00:15:17.022+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：Epg#Bz
+2025-07-23T00:15:17.034+08:00  INFO 19708 --- [http-nio-443-exec-1] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: false
+2025-07-23T00:15:31.487+08:00  INFO 19708 --- [http-nio-443-exec-2] c.z.c.s.controller.CaptchaController     : 用户: 17784917673@qq.com 输入的验证码为：HxBuBw
+2025-07-23T00:15:31.500+08:00  INFO 19708 --- [http-nio-443-exec-2] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: true
+2025-07-23T00:18:49.568+08:00  INFO 19708 --- [http-nio-443-exec-5] c.z.c.s.service.impl.CaptchaServiceImpl  : 为邮箱 captcha:register:qwertyu@qq.com 混合验证码
+2025-07-23T00:19:41.434+08:00  INFO 19708 --- [http-nio-443-exec-6] c.z.c.s.controller.CaptchaController     : 用户: qwertyu@qq.com 输入的验证码为：Ztqs8t
+2025-07-23T00:19:41.449+08:00  INFO 19708 --- [http-nio-443-exec-6] c.z.c.s.service.impl.CaptchaServiceImpl  : 验证码校验结果: true
+2025-07-23T00:21:36.797+08:00  WARN 19708 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Start destroying common HttpClient
+2025-07-23T00:21:36.798+08:00  WARN 19708 --- [Thread-7] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Start destroying Publisher
+2025-07-23T00:21:36.800+08:00  WARN 19708 --- [Thread-7] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Destruction of the end
+2025-07-23T00:21:36.805+08:00  WARN 19708 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Destruction of the end
+2025-07-23T00:21:36.985+08:00  INFO 19708 --- [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    : De-registering from Nacos Server now...
+2025-07-23T00:21:36.986+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [DEREGISTER-SERVICE] public deregistering service captcha-service with instance: Instance{instanceId='null', ip='192.168.0.110', port=443, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2025-07-23T00:21:37.009+08:00  INFO 19708 --- [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    : De-registration finished.
+2025-07-23T00:21:37.012+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2025-07-23T00:21:37.012+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2025-07-23T00:21:37.012+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2025-07-23T00:21:37.012+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2025-07-23T00:21:37.012+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2025-07-23T00:21:37.013+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2025-07-23T00:21:37.013+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2025-07-23T00:21:37.013+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2025-07-23T00:21:37.013+08:00  WARN 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Start destroying NacosRestTemplate
+2025-07-23T00:21:37.014+08:00  WARN 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Destruction of the end
+2025-07-23T00:21:37.014+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2025-07-23T00:21:37.014+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2025-07-23T00:21:37.014+08:00  WARN 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Start destroying NacosRestTemplate
+2025-07-23T00:21:37.014+08:00  WARN 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Destruction of the end
+2025-07-23T00:21:37.015+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2025-07-23T00:21:37.015+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Shutdown rpc client, set status to shutdown
+2025-07-23T00:21:37.015+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@58d1ad69[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2025-07-23T00:21:37.016+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Close current connection 1753199898303_127.0.0.1_43862
+2025-07-23T00:21:37.032+08:00  WARN 19708 --- [nacos-grpc-client-executor-127.0.0.1-285] c.a.n.c.remote.client.grpc.GrpcClient    : [1753199898303_127.0.0.1_43862]Ignore error event,isRunning:false,isAbandon=false
+2025-07-23T00:21:37.038+08:00  INFO 19708 --- [SpringApplicationShutdownHook] c.a.n.c.remote.client.grpc.GrpcClient    : Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@17c198c[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 286]
+2025-07-23T00:21:37.038+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@6b4cb31[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 464]
+2025-07-23T00:21:37.040+08:00  INFO 19708 --- [SpringApplicationShutdownHook] c.a.n.c.a.r.identify.CredentialWatcher   : [null] CredentialWatcher is stopped
+2025-07-23T00:21:37.040+08:00  INFO 19708 --- [SpringApplicationShutdownHook] c.a.n.c.a.r.identify.CredentialService   : [null] CredentialService is freed
+2025-07-23T00:21:37.040+08:00  INFO 19708 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop

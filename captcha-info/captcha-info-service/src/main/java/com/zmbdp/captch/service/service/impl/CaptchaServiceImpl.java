@@ -68,23 +68,28 @@ public class CaptchaServiceImpl implements CaptchaService {
         String countKey = splicingCountKey(email, captchaType);
 
         // 检查是否已有未过期的验证码
-        String captchaUser = redisUtil.getRedis(captchaKey);
+        String captchaUser = redisUtil.getKey(captchaKey);
         // 如果用户已经发送验证码了，时间在 60 秒之内，就提示用户，防止恶意攻击
         if (StringUtils.hasText(captchaUser) && captchaTime * 60 - redisUtil.getExpireTime(captchaKey) < 60) {
             throw new CaptchaException("冷静冷静！验证码还在路上呢 (´• ω •`)ﾉ 别频繁点击啦~");
         }
-        /*// 邮箱版
-        String captcha = setRedisCaptcha(captchaKey, countKey);
-        boolean sendFlag = false;
-        // 不为空返回 true
-        if (StringUtils.hasText(captcha)) {
-            // 开始发送邮箱
-            // 发送邮箱操作
-            sendFlag = emailService.sendEmail(email, captcha);
-        }
-        return new GetCaptchaResponse(email, sendFlag);*/
         // 不用邮箱版
-        return new GetCaptchaResponse(email, setRedisCaptcha(captchaKey, countKey));
+        // 先判断一下是否可以给用户发送验证码
+        if (ensureCaptchaRateLimit(countKey)) {
+            // 可以发送的话就开始发送，并且存储到 redis 中
+            /*// 邮箱版
+            String captcha = setRedisCaptcha(captchaKey, countKey);
+            boolean sendFlag = false;
+            // 不为空返回 true
+            if (StringUtils.hasText(captcha)) {
+                // 开始发送邮箱
+                // 发送邮箱操作
+                sendFlag = emailService.sendEmail(email, captcha);
+            }
+            return new GetCaptchaResponse(email, sendFlag);*/
+            return new GetCaptchaResponse(email, setRedisCaptcha(captchaKey, countKey));
+        }
+        return new GetCaptchaResponse(email, false);
     }
 
     /**
@@ -122,6 +127,7 @@ public class CaptchaServiceImpl implements CaptchaService {
                 // 说明是登录接口
                 // 拼装 Redis 键
                 yield CaptchaConstants.CAPTCHA_PREFIX + CaptchaConstants.LOGIN_CAPTCHA_PREFIX + CaptchaConstants.CAPTCHA_COUNT + email;
+
             case CaptchaTypeConstants.REGISTER_CAPTCHA:
                 // 说明是注册接口
                 yield CaptchaConstants.CAPTCHA_PREFIX + CaptchaConstants.REGISTER_CAPTCHA_PREFIX + CaptchaConstants.CAPTCHA_COUNT + email;
@@ -132,6 +138,30 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     /**
+     * 检查验证码是否能发送给用户
+     *
+     * @param countKey 验证码计数 key
+     * @return true-可以发送; false-不可发送
+     */
+    private boolean ensureCaptchaRateLimit(String countKey) {
+        // 先判断验证码是否已经有了
+        long captchaCount = redisUtil.incr(countKey);
+        if (captchaCount == 1) {
+            // 因为前面已经创建并且是 1 了, 这里设置过期时间就行
+            redisUtil.expire(countKey, CaptchaConstants.CAPTCHA_RATE_LIMIT_EXPIRE_SECONDS);
+        }
+
+        // 检查次数限制
+        if (captchaCount > captchaMax) {
+            redisUtil.decr(countKey);
+            throw new CaptchaException(
+                    String.format("今日你已经发了%d次验证码了~手指头都酸了，明天再帮你发吧 (；′⌒`)", captchaMax)
+            );
+        }
+        return true;
+    }
+
+    /**
      * 存储验证码
      *
      * @param redisKey 拼装好的 Redis 键
@@ -139,21 +169,6 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @return 存储是否成功
      */
     private boolean setRedisCaptcha(String redisKey, String countKey) {
-        // 先判断验证码是否已经有了
-        long captchaCount = redisUtil.incr(countKey);
-        if (captchaCount == 1) {
-            // 因为前面已经创建并且是 1 了, 这里设置过期时间就像
-            redisUtil.expire(countKey, CaptchaConstants.CAPTCHA_RATE_LIMIT_EXPIRE_SECONDS);
-        }
-
-        // 检查次数限制
-        if (captchaCount > captchaMax + 1) {
-            redisUtil.decr(countKey);
-            throw new CaptchaException(
-                    String.format("今日你已经发了第%d次验证码了~手指头都酸了，明天再帮你发吧 (；′⌒`)", captchaMax)
-            );
-        }
-
         String captcha = null;
         try {
             captcha = switch (captchaLevel) {
@@ -185,6 +200,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 //        return captcha;
         return true;
     }
+
 
     /**
      * 获取验证码(纯数字版)
@@ -267,7 +283,7 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     private boolean checkCode(String captchaKey, String inputCode) {
         // 获取存储的验证码
-        String storedCode = redisUtil.getRedis(captchaKey);
+        String storedCode = redisUtil.getKey(captchaKey);
         if (!StringUtils.hasText(storedCode)) {
             // 说明 redis 查不到验证码
             return false;

@@ -9,11 +9,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisUtil {
 
+    private static final String REDIS_SPLIT = ":"; // 设置 redis 中的分割符
+    private static final String REDIS_DEFAULT_PREFIX = "default"; // 设置 redis key 的默认前缀
+
     private StringRedisTemplate redisTemplate;
 
     public RedisUtil(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
+
 
     /*=============================================    String    =============================================*/
 
@@ -23,7 +27,7 @@ public class RedisUtil {
      * @param key 键
      * @return 值
      */
-    public String getRedis(String key) {
+    public String getKey(String key) {
         if (!StringUtils.hasText(key)) {
             return null;
         }
@@ -145,6 +149,7 @@ public class RedisUtil {
 
     /**
      * 对 key 的值进行原子递增（+1）
+     *
      * @param key Redis 键
      * @return 递增后的值（失败返回 -1）
      */
@@ -162,6 +167,7 @@ public class RedisUtil {
 
     /**
      * 对 key 的值进行原子递减（-1）
+     *
      * @param key Redis 键
      * @return 递减后的值（失败返回 -1）
      */
@@ -176,7 +182,8 @@ public class RedisUtil {
 
     /**
      * 设置超时时间
-     * @param key 键
+     *
+     * @param key     键
      * @param seconds 时间(秒)
      */
     public void expire(String key, long seconds) {
@@ -185,6 +192,27 @@ public class RedisUtil {
         } catch (Exception e) {
             log.error("Redis expire error: {}", key, e);
         }
+    }
+
+    /**
+     * 构建所需要的前缀
+     * @param prefix 前缀
+     * @param args 需要构建的信息的 key
+     * @return 构建后的 Key
+     */
+    public String buildKey(String prefix, String... args) {
+        if (!StringUtils.hasText(prefix)) {
+            prefix = REDIS_DEFAULT_PREFIX;
+        }
+        StringBuilder key = new StringBuilder();
+        key.append(prefix);
+        for (String arg : args) {
+            if (arg == null) {
+                continue;
+            }
+            key.append(REDIS_SPLIT).append(arg);
+        }
+        return key.toString();
     }
 
 
@@ -280,10 +308,10 @@ public class RedisUtil {
     }
 
 
-
     /**
      * 带过期时间的原子递增（首次递增时设置过期时间）
-     * @param key Redis 键
+     *
+     * @param key           Redis 键
      * @param expireSeconds 过期时间（秒）
      * @return 递增后的值（失败返回 -1）
      */

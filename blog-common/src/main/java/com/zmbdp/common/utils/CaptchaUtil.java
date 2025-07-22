@@ -52,8 +52,7 @@ public class CaptchaUtil {
     /**
      * 生成混合型验证码（数字+字母+特殊字符）
      *
-     * @param length              验证码长度（建议6~12位）
-     * @param includeSpecialChars 是否包含特殊字符
+     * @param length 验证码长度（建议6~12位）
      * @return 混合验证码字符串
      */
     public String getMixedCaptcha(int length) {
