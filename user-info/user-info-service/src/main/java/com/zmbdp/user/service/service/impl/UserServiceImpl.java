@@ -6,6 +6,7 @@ import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 import com.zmbdp.captcha.api.pojo.request.CheckCaptchaRequest;
 import com.zmbdp.common.constant.CaptchaConstants;
 import com.zmbdp.common.constant.CaptchaTypeConstants;
+import com.zmbdp.common.constant.UserConstants;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.common.utils.*;
@@ -18,6 +19,7 @@ import com.zmbdp.user.service.dataobject.UserInfo;
 import com.zmbdp.user.service.mapper.UserInfoMapper;
 import com.zmbdp.user.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private CaptchaConfig CaptchaConfig;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 登录接口
@@ -120,9 +124,12 @@ public class UserServiceImpl implements UserService {
         log.info("用户注册成功, 用户email: {}, 用户id: {}", registerUserInfo.getEmail(), userInfo.getId());
         // 走到这里，说明注册成功了
         // 注册成功之后，还得发送邮件
-        // 发送邮件代码逻辑
         // 将用户信息添加到 redis 中去
         redisUtil.setKey(buildKey(userInfo.getEmail()), JSONUtil.toJson(userInfo), EXPIRE_TIME);
+        // 先发送到 rabbitMq 里面
+        // 发送邮件代码逻辑
+        userInfo.setPassword(""); // 密码不能发，设置个空
+        rabbitTemplate.convertAndSend(UserConstants.USER_EXCHANGE_NAME, "", JSONUtil.toJson(userInfo));
         return userInfo.getId();
     }
 

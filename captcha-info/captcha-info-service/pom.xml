@@ -57,6 +57,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.zmbdp</groupId>
             <artifactId>captcha-info-api</artifactId>
             <version>${captcha-info-api.version}</version>

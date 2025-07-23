@@ -25,6 +25,13 @@ spring:
           max-idle: 8 # 最大空闲连接数
           min-idle: 0 # 最小空闲连接数
 
+  rabbitmq:
+    # RabbitMq 集群地址 zmbdp -> 用户名； Hf@173503494 -> 密码； spring-cloud-blog -> 虚拟机名称
+    addresses: amqp://zmbdp:Hf173503494@127.0.0.1:5672/spring-cloud-blog
+    listener:
+      simple:
+        acknowledge-mode: manual # 配置为手动确认模式
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

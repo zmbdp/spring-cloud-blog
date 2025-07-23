@@ -6,15 +6,21 @@ import com.zmbdp.captcha.api.pojo.response.CheckCaptchaResponse;
 import com.zmbdp.captcha.api.pojo.response.GetCaptchaResponse;
 import com.zmbdp.common.constant.CaptchaConstants;
 import com.zmbdp.common.constant.CaptchaTypeConstants;
+import com.zmbdp.common.constant.UserConstants;
 import com.zmbdp.common.exception.CaptchaException;
 import com.zmbdp.common.utils.CaptchaUtil;
+import com.zmbdp.common.utils.JSONUtil;
 import com.zmbdp.common.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -42,6 +48,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     // 一天中获取验证码最大的次数
     @Value("${captcha.max}")
     private Integer captchaMax;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 获取验证码
@@ -77,17 +86,23 @@ public class CaptchaServiceImpl implements CaptchaService {
         // 先判断一下是否可以给用户发送验证码
         if (ensureCaptchaRateLimit(countKey)) {
             // 可以发送的话就开始发送，并且存储到 redis 中
-            /*// 邮箱版
+            // 判断是否存储到了 redis 中
             String captcha = setRedisCaptcha(captchaKey, countKey);
-            boolean sendFlag = false;
-            // 不为空返回 true
+            // 不是空返回 true
             if (StringUtils.hasText(captcha)) {
-                // 开始发送邮箱
-                // 发送邮箱操作
-                sendFlag = emailService.sendEmail(email, captcha);
+                // 说明存到了 redis 中，可以发送验证码到 MQ 队列中了
+                // 如果说发送失败，还要从 redis 中删除这个验证码
+                Map<String, String> emailData = new HashMap<>();
+                emailData.put("email", email);
+                emailData.put("captcha", captcha);
+                rabbitTemplate.convertAndSend(UserConstants.USER_EXCHANGE_NAME, "", JSONUtil.toJson(emailData));
+                /*if () {
+                    redisUtil.deleteKey(captchaKey);
+                    return new GetCaptchaResponse(email, false);
+                }*/
+                return new GetCaptchaResponse(email, true);
             }
-            return new GetCaptchaResponse(email, sendFlag);*/
-            return new GetCaptchaResponse(email, setRedisCaptcha(captchaKey, countKey));
+            // 发送到 rabbit 的 email 队列中
         }
         return new GetCaptchaResponse(email, false);
     }
@@ -131,6 +146,7 @@ public class CaptchaServiceImpl implements CaptchaService {
             case CaptchaTypeConstants.REGISTER_CAPTCHA:
                 // 说明是注册接口
                 yield CaptchaConstants.CAPTCHA_PREFIX + CaptchaConstants.REGISTER_CAPTCHA_PREFIX + CaptchaConstants.CAPTCHA_COUNT + email;
+
             default:
                 log.error("验证码种类错误");
                 throw new CaptchaException();
@@ -168,7 +184,7 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @param countKey 验证码计数 key
      * @return 存储是否成功
      */
-    private boolean setRedisCaptcha(String redisKey, String countKey) {
+    private String setRedisCaptcha(String redisKey, String countKey) {
         String captcha = null;
         try {
             captcha = switch (captchaLevel) {
@@ -197,8 +213,8 @@ public class CaptchaServiceImpl implements CaptchaService {
         // 没生成失败就存到 redis 里面去
         redisUtil.setKey(redisKey, captcha, captchaTime * 60);
         // 返回验证码，需要发送邮件
-//        return captcha;
-        return true;
+        return captcha;
+//        return true;
     }
 
 
