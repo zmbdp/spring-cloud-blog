@@ -1,6 +1,6 @@
 package com.zmbdp.common.constant;
 
-public class UserConstants {
+public class RabbitMqConstants {
     /**
      * 注册队列名称
      */
@@ -9,6 +9,11 @@ public class UserConstants {
      * 验证码队列名称
      */
     public static final String CAPTCHA_QUEUE_NAME = "captcha.queue";
+
+    /**
+     * 修改用户数据的队列名称
+     */
+    public static final String UPDATE_USER_QUEUE_NAME = "update.user.queue";
 
     /**
      * 用户交换机名称

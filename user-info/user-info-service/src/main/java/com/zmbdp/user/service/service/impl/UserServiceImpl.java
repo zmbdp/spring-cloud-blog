@@ -6,7 +6,7 @@ import com.zmbdp.blog.api.pojo.response.BlogInfoResponse;
 import com.zmbdp.captcha.api.pojo.request.CheckCaptchaRequest;
 import com.zmbdp.common.constant.CaptchaConstants;
 import com.zmbdp.common.constant.CaptchaTypeConstants;
-import com.zmbdp.common.constant.UserConstants;
+import com.zmbdp.common.constant.RabbitMqConstants;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
 import com.zmbdp.common.utils.*;
@@ -14,6 +14,7 @@ import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.RegisterUserInfoRequest;
 import com.zmbdp.user.api.pojo.response.UserInfoResponse;
 import com.zmbdp.user.api.pojo.response.UserLoginResponse;
+import com.zmbdp.user.api.pojo.response.RegisterQueueResponse;
 import com.zmbdp.user.service.config.CaptchaConfig;
 import com.zmbdp.user.service.dataobject.UserInfo;
 import com.zmbdp.user.service.mapper.UserInfoMapper;
@@ -128,8 +129,10 @@ public class UserServiceImpl implements UserService {
         redisUtil.setKey(buildKey(userInfo.getEmail()), JSONUtil.toJson(userInfo), EXPIRE_TIME);
         // 先发送到 rabbitMq 里面
         // 发送邮件代码逻辑
-        userInfo.setPassword(""); // 密码不能发，设置个空
-        rabbitTemplate.convertAndSend(UserConstants.USER_EXCHANGE_NAME, "", JSONUtil.toJson(userInfo));
+        rabbitTemplate.convertAndSend(
+                RabbitMqConstants.USER_EXCHANGE_NAME, "register.queue",
+                JSONUtil.toJson(new RegisterQueueResponse(userInfo.getEmail(), userInfo.getUserName()))
+        );
         return userInfo.getId();
     }
 

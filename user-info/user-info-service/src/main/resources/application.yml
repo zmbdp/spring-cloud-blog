@@ -4,33 +4,6 @@ server:
 spring:
   application:
     name: user-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/spring_cloud_blog_user?characterEncoding=utf8&useSSL=false
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  data:
-    redis:
-      host: 127.0.0.1
-      port: 6379
-      timeout: 60s # 表示 redis 操作超时时间, 表示连接空闲超过 N(s秒, ms毫秒) 后就会自动关闭连接
-      lettuce:
-        pool:
-          max-active: 8 # 允许的最大连接数
-          max-wait: 5s # 最大等待时间
-          max-idle: 8 # 最大空闲连接数
-          min-idle: 0 # 最小空闲连接数
-
-  rabbitmq:
-    # RabbitMq 集群地址 zmbdp -> 用户名； Hf@173503494 -> 密码； spring-cloud-blog -> 虚拟机名称
-    addresses: amqp://zmbdp:Hf173503494@127.0.0.1:5672/spring-cloud-blog
-    listener:
-      simple:
-        acknowledge-mode: manual # 配置为手动确认模式
 
 mybatis-plus:
   configuration:

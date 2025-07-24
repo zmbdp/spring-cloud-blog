@@ -106,6 +106,7 @@
             <version>${captcha-info-api.version}</version>
         </dependency>
 
+        <!-- rabbitMq -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>

@@ -2,11 +2,12 @@ package com.zmbdp.captch.service.service.impl;
 
 import com.zmbdp.captch.service.service.CaptchaService;
 import com.zmbdp.captcha.api.pojo.request.GetCaptchaRequest;
+import com.zmbdp.captcha.api.pojo.response.CaptchaQueueResponse;
 import com.zmbdp.captcha.api.pojo.response.CheckCaptchaResponse;
 import com.zmbdp.captcha.api.pojo.response.GetCaptchaResponse;
 import com.zmbdp.common.constant.CaptchaConstants;
 import com.zmbdp.common.constant.CaptchaTypeConstants;
-import com.zmbdp.common.constant.UserConstants;
+import com.zmbdp.common.constant.RabbitMqConstants;
 import com.zmbdp.common.exception.CaptchaException;
 import com.zmbdp.common.utils.CaptchaUtil;
 import com.zmbdp.common.utils.JSONUtil;
@@ -18,9 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -92,10 +90,10 @@ public class CaptchaServiceImpl implements CaptchaService {
             if (StringUtils.hasText(captcha)) {
                 // 说明存到了 redis 中，可以发送验证码到 MQ 队列中了
                 // 如果说发送失败，还要从 redis 中删除这个验证码
-                Map<String, String> emailData = new HashMap<>();
-                emailData.put("email", email);
-                emailData.put("captcha", captcha);
-                rabbitTemplate.convertAndSend(UserConstants.USER_EXCHANGE_NAME, "", JSONUtil.toJson(emailData));
+                rabbitTemplate.convertAndSend(
+                        RabbitMqConstants.USER_EXCHANGE_NAME, "captcha.queue",
+                        JSONUtil.toJson(new CaptchaQueueResponse(captcha, email))
+                );
                 /*if () {
                     redisUtil.deleteKey(captchaKey);
                     return new GetCaptchaResponse(email, false);
