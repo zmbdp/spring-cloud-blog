@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 @Configuration
 public class MailConfig {
     @Bean
-    @ConditionalOnProperty(prefix = "spring.mail", name = "mail")
+    @ConditionalOnProperty(prefix = "spring.mail", name = "username")
     public MailUtil mailUtil(JavaMailSender javaMailSender) {
         return new MailUtil(javaMailSender);
     }

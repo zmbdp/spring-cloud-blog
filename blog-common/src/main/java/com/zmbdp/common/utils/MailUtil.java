@@ -8,14 +8,13 @@ import java.util.Optional;
 
 public class MailUtil {
 
-
     private JavaMailSender javaMailSender;
 
     public MailUtil(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendMail(String senderEmail, String recipientEmail, String senderName, String subject, String message) throws Exception {
+    public void sendMail(String senderEmail, String recipientEmail, String senderName, String subject, String content) throws Exception {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false);
 
@@ -27,8 +26,8 @@ public class MailUtil {
         helper.setTo(recipientEmail);  // 收件人
         subject = Optional.ofNullable(subject).orElse("小博的博客平台");
         helper.setSubject(subject);  // 邮件主题
-        message = Optional.ofNullable(message).orElse("<h1>小博的博客平台</h1>");
-        helper.setText(message, true);  // 邮件正文
+        content = Optional.ofNullable(content).orElse("<h1>小博的博客平台</h1>");
+        helper.setText(content, true);  // 邮件正文
 
         // 发送邮件
         javaMailSender.send(mimeMessage);

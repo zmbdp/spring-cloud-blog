@@ -6,3 +6,5 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
+        name: captcha-service   # Nacos上的配置DataId，假设你的配置文件是captcha-service.yaml
+        group: DEFAULT_GROUP    # 默认分组，public即默认分组可以写DEFAULT_GROUP或不写（写了更清晰）
