@@ -1,17 +1,7 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: user-service
-
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-
-logging:
-  file:
-    name: spring-cloud-blog-logs/user.log
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

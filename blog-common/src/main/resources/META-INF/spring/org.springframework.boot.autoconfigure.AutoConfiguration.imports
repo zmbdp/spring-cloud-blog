@@ -1,1 +1,3 @@
 com.zmbdp.common.config.MailConfig
+com.zmbdp.common.config.CaptchaConfig
+com.zmbdp.common.config.RedisConfig

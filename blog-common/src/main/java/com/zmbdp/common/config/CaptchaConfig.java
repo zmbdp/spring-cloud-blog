@@ -1,4 +1,4 @@
-package com.zmbdp.captch.service.config;
+package com.zmbdp.common.config;
 
 import com.zmbdp.common.utils.CaptchaUtil;
 import org.springframework.context.annotation.Bean;

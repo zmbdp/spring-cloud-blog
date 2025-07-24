@@ -9,6 +9,7 @@ import com.zmbdp.common.constant.CaptchaTypeConstants;
 import com.zmbdp.common.constant.RabbitMqConstants;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
+
 import com.zmbdp.common.utils.*;
 import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.RegisterUserInfoRequest;
@@ -38,10 +39,13 @@ public class UserServiceImpl implements UserService {
     // 想要找到 bean, 一定要在启动类加上 @EnableFeignClients(clients = {BlogServiceApi.class})
     @Autowired
     private BlogServiceApi blogServiceApi;
+
     @Autowired
     private CaptchaConfig CaptchaConfig;
+
     @Autowired
     private RedisUtil redisUtil;
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 

@@ -1,4 +1,4 @@
-package com.zmbdp.user.service.config;
+package com.zmbdp.common.config;
 
 import com.zmbdp.common.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
