@@ -4685,3 +4685,43 @@ Consider the following:
 2025-07-24T23:17:41.149+08:00  INFO 23264 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
 2025-07-24T23:17:41.275+08:00  INFO 23264 --- [http-nio-8080-exec-2] c.z.u.s.service.impl.UserServiceImpl     : 用户注册成功, 用户email: 17784917673@qq.com, 用户id: 7
 2025-07-24T23:17:41.335+08:00  INFO 23264 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-1] c.z.u.s.listener.RegisterQueueListener   : 收到用户信息：{"email":"17784917673@qq.com","userName":"zmzb"}
+2025-07-24T23:19:50.834+08:00  WARN 23264 --- [Thread-7] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Start destroying Publisher
+2025-07-24T23:19:50.835+08:00  WARN 23264 --- [Thread-7] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Destruction of the end
+2025-07-24T23:19:50.835+08:00  WARN 23264 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Start destroying common HttpClient
+2025-07-24T23:19:50.837+08:00  WARN 23264 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Destruction of the end
+2025-07-24T23:19:50.851+08:00  INFO 23264 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2025-07-24T23:19:50.861+08:00  INFO 23264 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2025-07-24T23:19:51.287+08:00  INFO 23264 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2025-07-24T23:19:51.544+08:00  INFO 23264 --- [nacos-grpc-client-executor-127.0.0.1-75] com.alibaba.nacos.common.remote.client   : [1021b085-c98a-4779-9b19-451fce5f0cd7] Receive server push request, request = NotifySubscriberRequest, requestId = 3223
+2025-07-24T23:19:51.545+08:00  INFO 23264 --- [nacos-grpc-client-executor-127.0.0.1-75] com.alibaba.nacos.client.naming          : removed ips(1) service: DEFAULT_GROUP@@captcha-service -> [{"ip":"192.168.0.110","port":443,"weight":1.0,"healthy":true,"enabled":true,"ephemeral":true,"clusterName":"DEFAULT","serviceName":"DEFAULT_GROUP@@captcha-service","metadata":{"preserved.register.source":"SPRING_CLOUD"},"instanceHeartBeatInterval":5000,"ipDeleteTimeout":30000,"instanceHeartBeatTimeOut":15000}]
+2025-07-24T23:19:51.545+08:00  INFO 23264 --- [nacos-grpc-client-executor-127.0.0.1-75] com.alibaba.nacos.client.naming          : current ips:(0) service: DEFAULT_GROUP@@captcha-service -> []
+2025-07-24T23:19:51.559+08:00  INFO 23264 --- [nacos-grpc-client-executor-127.0.0.1-75] com.alibaba.nacos.common.remote.client   : [1021b085-c98a-4779-9b19-451fce5f0cd7] Ack server push request, request = NotifySubscriberRequest, requestId = 3223
+2025-07-24T23:19:51.699+08:00  INFO 23264 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2025-07-24T23:19:51.768+08:00  INFO 23264 --- [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    : De-registering from Nacos Server now...
+2025-07-24T23:19:51.768+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [DEREGISTER-SERVICE] public deregistering service user-service with instance: Instance{instanceId='null', ip='192.168.0.110', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2025-07-24T23:19:51.780+08:00  INFO 23264 --- [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    : De-registration finished.
+2025-07-24T23:19:51.781+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2025-07-24T23:19:51.781+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2025-07-24T23:19:51.781+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2025-07-24T23:19:51.782+08:00  WARN 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Start destroying NacosRestTemplate
+2025-07-24T23:19:51.782+08:00  WARN 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Destruction of the end
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2025-07-24T23:19:51.782+08:00  WARN 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Start destroying NacosRestTemplate
+2025-07-24T23:19:51.782+08:00  WARN 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : [NamingHttpClientManager] Destruction of the end
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Shutdown rpc client, set status to shutdown
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@a431aed[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2025-07-24T23:19:51.782+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.common.remote.client   : Close current connection 1753370040957_127.0.0.1_39716
+2025-07-24T23:19:51.787+08:00  INFO 23264 --- [SpringApplicationShutdownHook] c.a.n.c.remote.client.grpc.GrpcClient    : Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@3d08b15[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 77]
+2025-07-24T23:19:51.788+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@147f93f5[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 115]
+2025-07-24T23:19:51.788+08:00  INFO 23264 --- [SpringApplicationShutdownHook] c.a.n.c.a.r.identify.CredentialWatcher   : [null] CredentialWatcher is stopped
+2025-07-24T23:19:51.788+08:00  INFO 23264 --- [SpringApplicationShutdownHook] c.a.n.c.a.r.identify.CredentialService   : [null] CredentialService is freed
+2025-07-24T23:19:51.788+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming          : com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
+2025-07-24T23:19:51.932+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-24T23:19:51.952+08:00  INFO 23264 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

@@ -9,7 +9,6 @@ import com.zmbdp.common.constant.CaptchaTypeConstants;
 import com.zmbdp.common.constant.RabbitMqConstants;
 import com.zmbdp.common.exception.BlogException;
 import com.zmbdp.common.pojo.Result;
-
 import com.zmbdp.common.utils.*;
 import com.zmbdp.user.api.pojo.request.LoginUserInfoRequest;
 import com.zmbdp.user.api.pojo.request.RegisterUserInfoRequest;
